@@ -1,45 +1,48 @@
-import React from "react";
-
-export const Timer: React.FC = () => {
+import React, { useState, useEffect } from "react";
+import timeZones from "../time-zones";
+type Props = {
+    cityCountry: string;
+};
+export const Timer: React.FC<Props> = ({ cityCountry }) => {
     const stylesDiv: React.CSSProperties = {
-        fontSize: "2em",
+        fontSize: "1.4em",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
     };
 
-    //*============== ↓ hw-31 ↓ ==============*//
-
-    const colorsBg: string[] = ["lightblue", "coral"];
-    const colorsTxt: string[] = ["#1b1b1b", "#ffffff"];
-    setTimeout(ticBgColor, 5000);
-    const [colorBg, setBG] = React.useState(colorsBg[0]);
-    const [colorTxt, setTxt] = React.useState(colorsTxt[0]);
-    function ticBgColor() {
-        colorBg === colorsBg[0] ? setBG(colorsBg[1]) : setBG(colorsBg[0]);
-        colorTxt === colorsTxt[0] ? setTxt(colorsTxt[1]) : setTxt(colorsTxt[0]);
-    }
     const styles: React.CSSProperties = {
-        backgroundColor: colorBg,
+        backgroundColor: "coral",
         padding: "8px 16px",
         borderRadius: "5px",
-        color: colorTxt,
+        color: "#ffffff",
         fontWeight: 600,
         transition: "ease-in 0.08s",
+        minWidth: "122px",
+        textAlign: "center",
+        marginTop: "8px",
     };
 
-    //*============== ↑ hw-31 ↑ ==============*//
+    const [time, setTime] = useState<Date>(new Date());
 
-    setTimeout(tic, 1000);
-    const [time, setTime] = React.useState(new Date());
     function tic() {
         setTime(new Date());
     }
+
+    useEffect(() => {
+        const interval = setInterval(tic, 1000);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <div style={stylesDiv}>
-            <h2>Current Time</h2>
-            <p style={styles}>{time.toLocaleTimeString()}</p>
+            <h2>Current Time in {cityCountry}</h2>
+            <p style={styles}>
+                {time.toLocaleTimeString(undefined, {
+                    timeZone: timeZones[3].name,
+                })}
+            </p>
         </div>
     );
 };
