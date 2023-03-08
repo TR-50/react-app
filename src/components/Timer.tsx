@@ -10,10 +10,13 @@ export const Timer: React.FC<Props> = ({ cityCountry }) => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        minWidth: "40vw",
+        boxSizing: "border-box",
+        padding: "8px",
     };
 
     const styles: React.CSSProperties = {
-        backgroundColor: "coral",
+        backgroundColor: "#d3724f",
         padding: "8px 16px",
         borderRadius: "5px",
         color: "#ffffff",
@@ -22,6 +25,10 @@ export const Timer: React.FC<Props> = ({ cityCountry }) => {
         minWidth: "122px",
         textAlign: "center",
         marginTop: "8px",
+    };
+    const h2style: React.CSSProperties = {
+        color: "#ffffff",
+        textAlign: "center",
     };
 
     const [time, setTime] = useState<Date>(new Date());
@@ -35,14 +42,24 @@ export const Timer: React.FC<Props> = ({ cityCountry }) => {
         return () => clearInterval(interval);
     }, []);
 
+    //* ======== ↓ HW-32 ↓ ========
+
+    function timeZone(location: string) {
+        const placeIndex: number = timeZones.findIndex((obj) =>
+            JSON.stringify(obj).includes(location)
+        );
+        return placeIndex;
+    }
+
+    const options =
+        timeZone(cityCountry) >= 0
+            ? { timeZone: timeZones[timeZone(cityCountry)].name }
+            : undefined;
+
     return (
         <div style={stylesDiv}>
-            <h2>Current Time in {cityCountry}</h2>
-            <p style={styles}>
-                {time.toLocaleTimeString(undefined, {
-                    timeZone: timeZones[3].name,
-                })}
-            </p>
+            <h2 style={h2style}>Current Time in {cityCountry}</h2>
+            <p style={styles}>{time.toLocaleTimeString(undefined, options)}</p>
         </div>
     );
 };

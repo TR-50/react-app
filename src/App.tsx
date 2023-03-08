@@ -7,9 +7,10 @@ function App() {
     return (
         <div>
             <Timer cityCountry="London" />
-            <Timer cityCountry="Vladivostok" />
+            <Timer cityCountry="Warsaw" />
             <Timer cityCountry="Israel" />
-            <Timer cityCountry="Toronto" />
+            <Timer cityCountry="Winnipeg" />
+            <Timer cityCountry="CurrentLocation" />
         </div>
     );
 }
