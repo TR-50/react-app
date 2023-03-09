@@ -50,8 +50,10 @@ export const Timer: React.FC<Props> = ({ cityCountry }) => {
         );
         return placeIndex;
     }
+    
+    type Options = { timeZone: string } | undefined;
 
-    const options =
+    const options: Options =
         timeZone(cityCountry) >= 0
             ? { timeZone: timeZones[timeZone(cityCountry)].name }
             : undefined;
