@@ -44,7 +44,7 @@ export const Timer: React.FC<Props> = ({ cityCountry }) => {
 
     //* ======== ↓ HW-32 ↓ ========
 
-    function timeZone(location: string) {
+    function timeZone(location: string): number {
         const placeIndex: number = timeZones.findIndex((obj) =>
             JSON.stringify(obj).includes(location)
         );
