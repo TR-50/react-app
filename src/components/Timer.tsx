@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import timeZones from "../time-zones";
 
 type Props = {
     cityCountry: string;
 };
-
 const stylesDiv: React.CSSProperties = {
     fontSize: "1.4em",
     display: "flex",
@@ -33,7 +32,6 @@ const h2style: React.CSSProperties = {
 };
 
 export const Timer: React.FC<Props> = ({ cityCountry }) => {
-
     const [time, setTime] = useState<Date>(new Date());
 
     function tic() {
@@ -47,24 +45,32 @@ export const Timer: React.FC<Props> = ({ cityCountry }) => {
 
     //* ======== ↓ HW-32 ↓ ========
 
-    function timeZone(location: string): number {
-        const placeIndex: number = timeZones.findIndex((obj) =>
-            JSON.stringify(obj).includes(location)
-        );
-        return placeIndex;
-    }
-    
-    type Options = { timeZone: string } | undefined;
+    type TimeZone = { timeZone: string } | undefined;
 
-    const options: Options =
-        timeZone(cityCountry) >= 0
-            ? { timeZone: timeZones[timeZone(cityCountry)].name }
-            : undefined;
+    function timeZone(): TimeZone {
+        console.log("timeZone test");
+
+        const placeIndex: number = timeZones.findIndex((obj) =>
+            JSON.stringify(obj).includes(cityCountry)
+        );
+
+        return placeIndex < 0
+            ? undefined
+            : { timeZone: timeZones[placeIndex].name };
+    }
+
+    const timeZn = useRef<TimeZone>();
+
+    useEffect(() => {
+        timeZn.current = timeZone();
+    }, [cityCountry]);
 
     return (
         <div style={stylesDiv}>
             <h2 style={h2style}>Current Time in {cityCountry}</h2>
-            <p style={styles}>{time.toLocaleTimeString(undefined, options)}</p>
+            <p style={styles}>
+                {time.toLocaleTimeString(undefined, timeZn.current)}
+            </p>
         </div>
     );
 };
