@@ -1,35 +1,38 @@
 import React, { useState, useEffect } from "react";
 import timeZones from "../time-zones";
+
 type Props = {
     cityCountry: string;
 };
-export const Timer: React.FC<Props> = ({ cityCountry }) => {
-    const stylesDiv: React.CSSProperties = {
-        fontSize: "1.4em",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minWidth: "40vw",
-        boxSizing: "border-box",
-        padding: "8px",
-    };
 
-    const styles: React.CSSProperties = {
-        backgroundColor: "#d3724f",
-        padding: "8px 16px",
-        borderRadius: "5px",
-        color: "#ffffff",
-        fontWeight: 600,
-        transition: "ease-in 0.08s",
-        minWidth: "122px",
-        textAlign: "center",
-        marginTop: "8px",
-    };
-    const h2style: React.CSSProperties = {
-        color: "#ffffff",
-        textAlign: "center",
-    };
+const stylesDiv: React.CSSProperties = {
+    fontSize: "1.4em",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    minWidth: "40vw",
+    boxSizing: "border-box",
+    padding: "8px",
+};
+
+const styles: React.CSSProperties = {
+    backgroundColor: "#d3724f",
+    padding: "8px 16px",
+    borderRadius: "5px",
+    color: "#ffffff",
+    fontWeight: 600,
+    transition: "ease-in 0.08s",
+    minWidth: "122px",
+    textAlign: "center",
+    marginTop: "8px",
+};
+const h2style: React.CSSProperties = {
+    color: "#ffffff",
+    textAlign: "center",
+};
+
+export const Timer: React.FC<Props> = ({ cityCountry }) => {
 
     const [time, setTime] = useState<Date>(new Date());
 
