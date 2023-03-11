@@ -43,8 +43,6 @@ export const Timer: React.FC<Props> = ({ cityCountry }) => {
         return () => clearInterval(interval);
     }, []);
 
-    //* ======== ↓ HW-32 ↓ ========
-
     type TimeZone = { timeZone: string } | undefined;
 
     function timeZone(): TimeZone {
