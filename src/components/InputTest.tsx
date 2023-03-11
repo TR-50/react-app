@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import { Input } from "./Input";
 import { Timer } from "./Timer";
-import timeZones from "../time-zones";
 
 import "./InputTest.css";
+import placeIndex from "./checkIndexTimeZone";
 
 export const InputTest: React.FC = () => {
     const [inputValue, setInputValue] = useState<string>("");
     function submit(value: string): string {
         let res = "";
-        const placeIndex: number = timeZones.findIndex((obj) =>
-            JSON.stringify(obj).toLowerCase().includes(value.toLowerCase())
-        );
-        if (placeIndex < 0) {
+
+        if (placeIndex(value) < 0) {
             res = `"${value}" not found`;
         } else {
             setInputValue(value);

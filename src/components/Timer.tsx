@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import timeZones from "../time-zones";
+import placeIndex from "./checkIndexTimeZone";
 
 type Props = {
     cityCountry: string;
@@ -46,17 +47,9 @@ export const Timer: React.FC<Props> = ({ cityCountry }) => {
     type TimeZone = { timeZone: string } | undefined;
 
     function timeZone(): TimeZone {
-        console.log("timeZone test");
-
-        const placeIndex: number = timeZones.findIndex((obj) =>
-            JSON.stringify(obj)
-                .toLowerCase()
-                .includes(cityCountry.toLowerCase())
-        );
-
-        return placeIndex < 0
+        return placeIndex(cityCountry) < 0
             ? undefined
-            : { timeZone: timeZones[placeIndex].name };
+            : { timeZone: timeZones[placeIndex(cityCountry)].name };
     }
 
     const timeZn = useRef<TimeZone>();

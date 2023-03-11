@@ -1,4 +1,9 @@
-.input-field-block input {
+.input-field-conainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.input-field-conainer input {
     color: #ffffff;
     background-color: transparent;
     border: 1px solid #d0d0d0;
@@ -10,7 +15,7 @@
     outline-color: #d3724f;
     outline-offset: -2px;
 }
-.input-field-block button {
+.input-field-conainer button {
     color: #545462;
     font-weight: 600;
     border: 1px solid #d0d0d0;
@@ -20,25 +25,25 @@
     padding: 8px;
     transition: 0.2s;
 }
-.input-field-block button:hover {
+.input-field-conainer button:hover {
     color: #ffffff;
     background-color: #545462;
     border: 1px solid #d0d0d0;
     cursor: pointer;
 }
 
-.input-field-block  ::placeholder {
+.input-field-conainer ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #d0d0d0;
     opacity: 1; /* Firefox */
 }
 
-.input-field-block  :-ms-input-placeholder {
+.input-field-conainer :-ms-input-placeholder {
     /* Internet Explorer 10-11 */
     color: #d0d0d0;
 }
 
-.input-field-block  ::-ms-input-placeholder {
+.input-field-conainer ::-ms-input-placeholder {
     /* Microsoft Edge */
     color: #d0d0d0;
 }
