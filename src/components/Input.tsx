@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
+import timeZones from "../time-zones";
 import { Alert } from "./Alert";
+
+import './input.css'
+
 type Props = {
     submitFn: (value: string) => string;
     placeHolder: string;
@@ -20,9 +24,16 @@ export const Input: React.FC<Props> = ({
     }, []);
     function inputProcess() {
         setMessage(submitFn(inputElement.current!.value));
+
+        const placeIndex: number = timeZones.findIndex((obj) =>
+            JSON.stringify(obj).toLowerCase().includes(inputElement.current!.value.toLowerCase())
+        );
+        if (placeIndex >= 0) {
+            inputElement.current!.value = ''
+        }
     }
     return (
-        <div>
+        <div className="input-field-block">
             <input type="text" placeholder={placeHolder} id={id.current} />
             <button onClick={inputProcess}>{buttonName || "GO"}</button>
             {message && <Alert message={message} />}

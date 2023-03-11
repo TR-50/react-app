@@ -10,7 +10,6 @@ const stylesDiv: React.CSSProperties = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    minWidth: "40vw",
     boxSizing: "border-box",
     padding: "8px",
 };
@@ -29,6 +28,7 @@ const styles: React.CSSProperties = {
 const h2style: React.CSSProperties = {
     color: "#ffffff",
     textAlign: "center",
+    marginTop: "12px",
 };
 
 export const Timer: React.FC<Props> = ({ cityCountry }) => {
@@ -49,7 +49,9 @@ export const Timer: React.FC<Props> = ({ cityCountry }) => {
         console.log("timeZone test");
 
         const placeIndex: number = timeZones.findIndex((obj) =>
-            JSON.stringify(obj).includes(cityCountry)
+            JSON.stringify(obj)
+                .toLowerCase()
+                .includes(cityCountry.toLowerCase())
         );
 
         return placeIndex < 0
@@ -63,9 +65,12 @@ export const Timer: React.FC<Props> = ({ cityCountry }) => {
         timeZn.current = timeZone();
     }, [cityCountry]);
 
+    const capitalizeCityCountry: string =
+        cityCountry.charAt(0).toUpperCase() + cityCountry.slice(1);
+
     return (
         <div style={stylesDiv}>
-            <h2 style={h2style}>Current Time in {cityCountry}</h2>
+            <h2 style={h2style}>Current Time in {capitalizeCityCountry}</h2>
             <p style={styles}>
                 {time.toLocaleTimeString(undefined, timeZn.current)}
             </p>
