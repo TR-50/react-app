@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import timeZones from "../time-zones";
 import { Alert } from "./Alert";
 import placeIndex from "./checkIndexTimeZone";
 
@@ -30,10 +29,20 @@ export const Input: React.FC<Props> = ({
             inputElement.current!.value = "";
         }
     }
+    const handleKeyPress = (e: any) => {
+        if (e.key === "Enter") {
+            inputProcess();
+        }
+    };
     return (
         <>
             <div className="input-field-conainer">
-                <input type="text" placeholder={placeHolder} id={id.current} />
+                <input
+                    type="text"
+                    placeholder={placeHolder}
+                    id={id.current}
+                    onKeyPress={handleKeyPress}
+                />
                 <button onClick={inputProcess}>{buttonName || "GO"}</button>
             </div>
             {message && <Alert message={message} />}

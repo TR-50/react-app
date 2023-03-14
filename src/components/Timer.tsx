@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import timeZones from "../time-zones";
 import placeIndex from "./checkIndexTimeZone";
+import { Input } from "./Input";
 
 type Props = {
     cityCountry: string;
@@ -12,7 +13,8 @@ const stylesDiv: React.CSSProperties = {
     alignItems: "center",
     justifyContent: "center",
     boxSizing: "border-box",
-    padding: "8px",
+    padding: "18px",
+    minWidth: "40vw",
 };
 
 const styles: React.CSSProperties = {
@@ -32,7 +34,25 @@ const h2style: React.CSSProperties = {
     marginTop: "12px",
 };
 
+//-------------------------------------------------------------
+
 export const Timer: React.FC<Props> = ({ cityCountry }) => {
+    const [inputValue, setInputValue] = useState<string>(cityCountry);
+
+    function submit(value: string): string {
+        let res = "";
+
+        if (placeIndex(value) < 0) {
+            res = `"${value}" not found`;
+        } else if (value) {
+            setInputValue(value);
+        }
+
+        return res;
+    }
+
+    //-------------------------------------------------------------
+
     const [time, setTime] = useState<Date>(new Date());
 
     function tic() {
@@ -47,19 +67,22 @@ export const Timer: React.FC<Props> = ({ cityCountry }) => {
     type TimeZone = { timeZone: string } | undefined;
 
     function timeZone(): TimeZone {
-        return placeIndex(cityCountry) < 0
+        const curPlaceIndex = placeIndex(inputValue);
+        return curPlaceIndex < 0
             ? undefined
-            : { timeZone: timeZones[placeIndex(cityCountry)].name };
+            : { timeZone: timeZones[curPlaceIndex].name };
     }
 
     const timeZn = useRef<TimeZone>();
 
     useEffect(() => {
         timeZn.current = timeZone();
-    }, [cityCountry]);
+    }, [inputValue]);
 
     const capitalizeCityCountry: string =
-        cityCountry.charAt(0).toUpperCase() + cityCountry.slice(1);
+        inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
+
+    //-------------------------------------------------------------
 
     return (
         <div style={stylesDiv}>
@@ -67,6 +90,11 @@ export const Timer: React.FC<Props> = ({ cityCountry }) => {
             <p style={styles}>
                 {time.toLocaleTimeString(undefined, timeZn.current)}
             </p>
+            <Input
+                submitFn={submit}
+                placeHolder={"enter city or country"}
+                buttonName="enter"
+            />
         </div>
     );
 };
