@@ -14,14 +14,15 @@ export const Input: React.FC<Props> = ({
     placeHolder,
     buttonName,
 }) => {
-    const id = useRef<string>(Math.random().toString());
-    const inputElement = useRef<HTMLInputElement | null>();
+    // const id = useRef<string>(Math.random().toString()); //? *1 better to use ref prop *2
+    // const inputElement = useRef<HTMLInputElement | null>();  //? *1 better to use ref prop *2
+    const inputElement = useRef<HTMLInputElement>(null); //! *2 ref prop instead of *1
     const [message, setMessage] = useState<string>("");
-    useEffect(() => {
-        inputElement.current = document.getElementById(
-            id.current
-        ) as HTMLInputElement;
-    }, []);
+    // useEffect(() => {
+    //     inputElement.current = document.getElementById(
+    //         id.current
+    //     ) as HTMLInputElement;
+    // }, []);  //? *1 better to use ref prop *2
     function inputProcess() {
         setMessage(submitFn(inputElement.current!.value));
 
@@ -40,7 +41,8 @@ export const Input: React.FC<Props> = ({
                 <input
                     type="text"
                     placeholder={placeHolder}
-                    id={id.current}
+                    // id={id.current}
+                    ref={inputElement}
                     onKeyPress={handleKeyPress}
                 />
                 <button onClick={inputProcess}>{buttonName || "GO"}</button>
